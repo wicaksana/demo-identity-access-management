@@ -13,3 +13,24 @@ services:
     volumes:
       - ./lldap_data:/data
     restart: unless-stopped
+    networks:
+      - lldap_network
+  keycloak:
+    image: keycloak/keycloak:26.5.5
+    container_name: keycloak
+    ports:
+      - "8080:8080"
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=password
+      - KC_HEALTH_ENABLED=true
+      - KC_METRICS_ENABLED=true
+    volumes:
+      - ./keycloak_data/import:/opt/keycloak/data/import
+    command: ["start-dev", "--import-realm"]
+    restart: unless-stopped
+    networks:
+      - lldap_network
+networks:
+  lldap_network:
+    driver: bridge

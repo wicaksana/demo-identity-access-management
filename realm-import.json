@@ -1,0 +1,55 @@
+{
+  "realm": "demo-realm",
+  "enabled": true,
+  "components": {
+    "org.keycloak.storage.UserStorageProvider": [
+      {
+        "name": "ldap-server",
+        "providerId": "ldap",
+        "subComponents": {
+          "org.keycloak.storage.ldap.mappers.LDAPStorageMapper": [
+            {
+              "name": "username",
+              "providerId": "user-attribute-ldap-mapper",
+              "config": {
+                "ldap.attribute": [ "uid" ],
+                "is.mandatory.in.ldap": [ "true" ],
+                "always.read.value.from.ldap": [ "false" ],
+                "user.model.attribute": [ "username" ]
+              }
+            },
+            {
+              "name": "email",
+              "providerId": "user-attribute-ldap-mapper",
+              "config": {
+                "ldap.attribute": [ "mail" ],
+                "is.mandatory.in.ldap": [ "false" ],
+                "always.read.value.from.ldap": [ "false" ],
+                "user.model.attribute": [ "email" ]
+              }
+            }
+          ]
+        },
+        "config": {
+          "enabled": [ "true" ],
+          "vendor": [ "other" ], 
+          "connectionUrl": [ "ldap://lldap:3890" ],
+          "usersDn": [ "ou=people,dc=wicaksana,dc=id" ],
+          "authType": [ "simple" ],
+          "bindDn": [ "cn=admin,dc=wicaksana,dc=id" ],
+          "bindCredential": [ "password" ],
+          "editMode": [ "READ_ONLY" ],
+          "uuidLDAPAttribute": [ "entryUUID" ],
+          "userObjectClasses": [ "inetOrgPerson, organizationalPerson" ],
+          "usernameLDAPAttribute": [ "uid" ],
+          "rdnLDAPAttribute": [ "uid" ],
+          "batchSizeForSync": [ "1000" ],
+          "fullSyncPeriod": [ "604800" ],
+          "changedSyncPeriod": [ "86400" ],
+          "useTruststoreSpi": [ "ldapsOnly" ],
+          "connectionTimeout": [ "5000" ]
+        }
+      }
+    ]
+  }
+}
