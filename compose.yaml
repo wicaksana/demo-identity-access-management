@@ -1,0 +1,15 @@
+services:
+  lldap:
+    image: lldap/lldap:2026-03-04-debian
+    container_name: lldap
+    ports:
+      - "3890:3890"    # LDAP port
+      - "17170:17170"  # UI port
+    environment:
+      - LLDAP_JWT_SECRET=^7Oqr%!%4c9gj7Y]W0Z$EVK0I<IXw*aI
+      - LLDAP_LDAP_BASE_DN=dc=wicaksana,dc=id
+      - LLDAP_LDAP_USER_PASS=password     # username: admin
+      - TZ=UTC
+    volumes:
+      - ./lldap_data:/data
+    restart: unless-stopped
